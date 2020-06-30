@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    description of OPENSPECIFICATIES-XML
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <!-- Document root for Open specificatie -->
+   <xs:element name="OPENSPECIFICATIES-XML">
+      <xs:complexType>
+         <xs:sequence>
+            <!-- Document versie -->
+            <xs:element name="VersieXML" type="xs:string" />
+            <!-- Document type -->
+            <xs:element name="DocumentType">
+               <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                     <xs:enumeration value="DT_CATALOGUS" />
+                     <xs:enumeration value="DT_PROJECT" />
+                  </xs:restriction>
+               </xs:simpleType>
+            </xs:element>
+            <!-- Document secties -->
+            <xs:element ref="Algemeen" minOccurs="0" maxOccurs="1" />
+            <xs:element ref="Werksoorten" minOccurs="0" maxOccurs="1" />
+            <xs:element ref="Elementen" minOccurs="0" maxOccurs="1" />
+            <xs:element ref="Specificaties" minOccurs="0" maxOccurs="1" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Algemeen">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="ProjectGegevens" minOccurs="0" maxOccurs="1">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="Projectnaam" type="xs:string" />
+                     <xs:element name="Projectnummer" type="xs:string" />
+                     <xs:element name="Omschrijving" type="xs:string" />
+                     <xs:element name="Auteur" type="xs:string" />
+                     <xs:element name="Perceel" type="xs:string" />
+                     <xs:element name="Datum" type="xs:string" />
+                     <xs:element name="Opdrachtgever" type="xs:string" />
+                     <xs:element name="Email" type="xs:string" />
+                     <xs:element name="TelefoonNr" type="xs:string" />
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+            <xs:element name="CatalogusGegevens" minOccurs="0" maxOccurs="1">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="Catalogusnaam" type="xs:string" />
+                     <xs:element name="Omschrijving" type="xs:string" />
+                     <xs:element name="Auteur" type="xs:string" />
+                     <xs:element name="Datum" type="xs:string" />
+                     <xs:element name="URL" type="xs:string" />
+                     <xs:element name="Alleen-lezen" type="xs:boolean" />
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+            <xs:element ref="Voorblad" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Werksoorten">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Classificatie" type="xs:string" />
+            <xs:element ref="Hoofdstuk" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Elementen">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Classificatie" type="xs:string" />
+            <xs:element ref="Element" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>  
+   <!-- Specificaties -->
+   <xs:element name="Specificaties">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="Specificatie" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="ItemProperties">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="SelectieCode" type="xs:string" />
+            <xs:element name="CreationAuthor" type="xs:string" />
+            <xs:element name="CreationDateTime" type="xs:string" />
+            <xs:element name="SpecificatieStatus">
+               <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                     <xs:enumeration value="SK_UNCHANGED" />
+                     <xs:enumeration value="SK_ADDED" />
+                     <xs:enumeration value="SK_CHANGED" />
+                     <xs:enumeration value="SK_DELETED" />
+                     <xs:enumeration value="SK_NORMAL" />
+                  </xs:restriction>
+               </xs:simpleType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="SpecificatieConceptInvulling">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Conceptnummer" type="xs:int" />
+            <xs:element name="Invulplaatsnummer" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Schraptekstnummer" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Invultekst" type="xs:string" minOccurs="0" maxOccurs="1" />                                    
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Specificatie">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="SpecificatieHeader">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="SpecificatieType">
+                            <xs:simpleType>
+                               <xs:restriction base="xs:string">
+                                  <xs:enumeration value="ST_STABU-SPEC" />
+                                  <xs:enumeration value="ST_OPEN-SPEC" />
+                               </xs:restriction>
+                           </xs:simpleType>
+                       </xs:element>
+                     <xs:choice>                        
+                        <xs:sequence>                                
+                                <xs:element name="SpecificatieGroep" type="xs:string" />
+                                <xs:element name="SpecificatieVariant" type="xs:string" />
+                                <xs:element name="Versie" type="xs:string" />
+                                <xs:element name="Datum" type="xs:string" minOccurs = "0"/>
+                        </xs:sequence>
+                        <xs:sequence>
+                                <xs:element name="SpecificatieGUID" type="xs:string" />
+                                <xs:element name="Datum" type="xs:string" />
+                                <xs:element name="SpecificatieGroep" type="xs:string" minOccurs="0"/>                                
+                        </xs:sequence>
+                     </xs:choice>
+                     <xs:element name="Titel" type="xs:string" />
+                     <xs:element name="STABUCode" type="xs:string" />
+                     <xs:element name="BICode" type="xs:string" />
+                     <xs:element name="NENCode" type="xs:string" />
+                     <xs:element name="Fabrikantnaam" type="xs:string" />
+                     <xs:element name="Fabrikantcode" type="xs:string" />
+                     <xs:element name="Trefwoorden" type="xs:string" />
+                     <xs:element name="Productnaam" type="xs:string" />                     
+                     <xs:element name="URL" type="xs:string" minOccurs="0" maxOccurs="1" />                     
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+            <xs:element name="SpecificatieConcept" minOccurs="1" maxOccurs="unbounded">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element name="ConceptGUID" type="xs:string" minOccurs="0" />
+                     <xs:choice>
+                     
+                        <xs:sequence>
+                           <xs:element name="Vastetekst" type="xs:string" minOccurs="0" maxOccurs="1" />
+                           <xs:element name="Schrapteksten" minOccurs="0">
+                              <xs:complexType>
+                                 <xs:sequence>
+                                    <xs:choice>
+                                       <xs:sequence>
+                                          <xs:element name="Optie" minOccurs="1" maxOccurs="unbounded">
+                                             <xs:complexType>
+                                                <xs:sequence>
+                                                   <xs:element name="GUID" type="xs:string" minOccurs="0" maxOccurs="1" />
+                                                   <xs:element name="SC" type="xs:string" />
+                                                </xs:sequence>
+                                             </xs:complexType>
+                                          </xs:element>
+                                       </xs:sequence>
+                                       <xs:sequence>
+                                          <xs:element name="SC" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+                                       </xs:sequence>
+                                    </xs:choice>
+                                    <xs:element name="Opmerking" type="xs:string" minOccurs="0" maxOccurs="1" />
+                                 </xs:sequence>
+                              </xs:complexType>
+                           </xs:element>
+                        </xs:sequence>
+                        
+                        <xs:element name="Opmerking" type="xs:string"/>
+                        
+                     </xs:choice>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="ItemHeader">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="Titel" type="xs:string" />
+            <xs:element name="Id" type="xs:string" />
+            <xs:element name="Versie" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Volgnummer" type="xs:string" minOccurs="0" maxOccurs="1" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Hoofdstuk">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemHeader" />
+            <xs:element ref="Paragraaf" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Paragraaf">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemHeader" />
+            <xs:element ref="BestekPost" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="BestekPost">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemHeader" />
+            <xs:element ref="ItemProperties" />
+            <xs:element ref="RubriekBepaling" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="WsBouwdeel" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="RubriekBepaling">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemProperties" />
+            <xs:element name="Volgnummer" type="xs:string" />
+            <xs:element name="SpecificatieGroep" type="xs:string" />
+            <xs:element name="Titel" type="xs:string" />
+            <xs:choice minOccurs="0">               
+               <xs:sequence>
+                  <!-- variant geselecteerd -->
+                  <xs:choice>
+                     <xs:sequence>                                                    
+                        <!-- STABU variant -->
+                        <xs:element name="SpecificatieVariant" type="xs:string" />
+                        <xs:element name="Versie" type="xs:string" />
+                     </xs:sequence>
+                     <xs:sequence>
+                        <!-- OPEN SPEC variant -->
+                        <xs:element name="SpecificatieGUID" type="xs:string" />
+                        <xs:element name="Datum" type="xs:string" />
+                     </xs:sequence>                     
+                  </xs:choice>
+                  <xs:element ref="SpecificatieConceptInvulling" minOccurs="0" maxOccurs="unbounded" />
+               </xs:sequence>
+            </xs:choice>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Voorblad">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemHeader" />
+            <xs:element name="Tekst" type="xs:string" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="WsBouwdeel">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemProperties" />
+            <xs:element name="Volgnummer" type="xs:string" />
+            <xs:element name="SpecificatieGroep" type="xs:string" />
+            <xs:element name="Titel" type="xs:string" />
+            <xs:choice minOccurs="0">               
+               <xs:sequence>
+                  <!-- variant geselecteerd -->
+                  <xs:choice>
+                     <xs:sequence>                                                    
+                        <!-- STABU variant -->
+                        <xs:element name="SpecificatieVariant" type="xs:string" />
+                        <xs:element name="Versie" type="xs:string" />
+                     </xs:sequence>
+                     <xs:sequence>
+                        <!-- OPEN SPEC variant -->
+                        <xs:element name="SpecificatieGUID" type="xs:string" />
+                        <xs:element name="Datum" type="xs:string" />
+                     </xs:sequence>                     
+                  </xs:choice>
+                  <xs:element ref="SpecificatieConceptInvulling" minOccurs="0" maxOccurs="unbounded" />
+               </xs:sequence>
+            </xs:choice>
+            <xs:element name="Hoeveelheid" type="xs:string" />
+            <xs:element name="Eenheid" type="xs:string" />
+            <xs:element name="Sorteercode" type="xs:string" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="EsSpecificatie">
+   <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemProperties" />
+            <xs:element name="Volgnummer" type="xs:string" />
+            <xs:element name="SpecificatieGroep" type="xs:string" />
+            <xs:element name="Titel" type="xs:string" />
+            <xs:choice>               
+               <xs:sequence>
+                  <!-- variant geselecteerd -->
+                  <xs:choice>
+                     <xs:sequence>                            
+                        <!-- STABU variant -->
+                        <xs:element name="SpecificatieVariant" type="xs:string" />
+                        <xs:element name="Versie" type="xs:string" />
+                      </xs:sequence>
+                     <xs:sequence>
+                        <!-- OPEN SPEC variant -->
+                        <xs:element name="SpecificatieGUID" type="xs:string" />
+                        <xs:element name="Datum" type="xs:string" />
+                     </xs:sequence>                     
+                  </xs:choice>
+                  <xs:element ref="SpecificatieConceptInvulling" minOccurs="0" maxOccurs="unbounded" />
+               </xs:sequence>
+            </xs:choice>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Element">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemHeader" />
+            <xs:element name="Invultekst" type="xs:string" />
+            <xs:element ref="EsSpecificatie" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="SubElement" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="SubElement">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemHeader" />
+            <xs:element name="Invultekst" type="xs:string" />
+            <xs:element ref="EsSpecificatie" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="ElmBouwdeel" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="ElmBouwdeel">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemHeader" />
+            <xs:element name="Invultekst" type="xs:string" />
+            <xs:element name="Hoeveelheid" type="xs:string" />
+            <xs:element name="Eenheid" type="xs:string" />
+            <xs:element ref="Bouwdeelcomponent" minOccurs="0" maxOccurs="unbounded" />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="Bouwdeelcomponent">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="ItemProperties" />
+            <xs:element name="BestekPostReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="Volgnummer" type="xs:string" />
+            <xs:element name="SpecificatieGroep" type="xs:string" />
+            <xs:element name="Titel" type="xs:string" />
+            <xs:choice minOccurs="0">               
+               <xs:sequence>
+                  <!-- variant geselecteerd -->
+                  <xs:choice>
+                     <xs:sequence>                            
+                        <!-- STABU variant -->
+                        <xs:element name="SpecificatieVariant" type="xs:string" />
+                        <xs:element name="Versie" type="xs:string" />
+                      </xs:sequence>
+                     <xs:sequence>
+                        <!-- OPEN SPEC variant -->
+                        <xs:element name="SpecificatieGUID" type="xs:string" />
+                        <xs:element name="Datum" type="xs:string" />
+                     </xs:sequence>                     
+                  </xs:choice>                  
+                  <xs:element ref="SpecificatieConceptInvulling" minOccurs="0" maxOccurs="unbounded" />
+               </xs:sequence>
+            </xs:choice>
+            <xs:element name="Hoeveelheid" type="xs:string" />
+            <xs:element name="Eenheid" type="xs:string" />
+            <xs:element name="Sorteercode" type="xs:string" />
+         </xs:sequence>
+      </xs:complexType>
+  </xs:element>
+</xs:schema>
